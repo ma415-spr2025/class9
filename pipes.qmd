@@ -1,0 +1,80 @@
+---
+title: "pipes"
+format: html
+editor: visual
+---
+
+## Quarto
+
+```{r}
+vector <- 1:9
+
+vector1 |> mean() #same thing as %>% 
+```
+
+#exercises from intro to dplyr
+```{r}
+#| label: dplyr1
+#| warning: false
+#| message: false
+
+library(tidyverse)
+
+dim(starwars)
+
+starwars
+
+starwars[starwars$hair_color=='brown',]
+starwars|>arrange(height) #low to high
+starwars|>arrange(desc(height)) #high to low
+```
+
+## random operations
+
+do not forget to set the seed for the random number generator
+```{r}
+set.seed(2020)
+runif(100)
+```
+
+## column operations 
+```{r}
+#| label: col operations
+
+colnames(starwars)
+
+cols_i_like <- starwars |> select(hair_color,skin_color, eye_color)
+cols2<- starwars|> select(ends_with("color"))
+
+
+```
+
+## mutate means add a variable
+
+```{r}
+#| label: mutate
+
+mod1 <- starwars |> select(name,height,mass) |> mutate(hgt_m = height/100)
+
+#added a new column hgt_m 
+```
+
+
+## a quick trip into groups 
+
+```{r}
+species <- starwars |> group_by(species) |> tally()
+```
+
+## TidyR
+```{r}
+relig_income
+#difficult to use, want to pivot 
+
+relig_income |> pivot_longer(
+  cols =!religion, 
+  names_to = "income",
+  values_to = "count"
+)
+```
+
